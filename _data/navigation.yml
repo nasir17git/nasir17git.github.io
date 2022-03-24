@@ -1,27 +1,18 @@
-<<<<<<< HEAD
+
 # main links
 main:
   # - title: "Quick-Start Guide"
     # url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   - title: "Main"
     url: https://mmistakes.github.io/minimal-mistakes/about/
-  - title: "Study"
-    url: /study/
+  - title: "Bootcamp"
+    url: /btcp/
+    children:
+    - title: "TIL"
+      url: "/btcp/til"
+    - title: "posts"
+      url: "/btcp/posts"
   - title: "Showcase"
     url: /showcase/
   # - title: "Sitemap"
 #   #   url: /sitemap/
-=======
- # main links
- main:
-   # - title: "Quick-Start Guide"
-     # url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-   - title: "Main"
-     url: https://mmistakes.github.io/minimal-mistakes/about/
-   - title: "Study"
-     url: /study/
-   - title: "Sample Collections"
-     url: /collection-archive/
-   # - title: "Sitemap"
-   #   url: /sitemap/
->>>>>>> 9cccaf3b20acdd8aa869cc01a2c4db270bb07215
