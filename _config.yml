@@ -23,16 +23,16 @@ name                     : "JongJin Kim"
 description              : # "."
 url                      : "https://nasir17git.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "nasir17git/nasir17git.github.io"
+repository               : "https://github.com/nasir17git/"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "Rising from the ashes"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
+  provider               : "disqus"
   disqus:
-    shortname            : # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+    shortname            : https-nasir17git-github-io
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -94,9 +94,10 @@ social:
 
 # Analytics
 analytics:
-  provider               : false # false (default), "google", "google-universal", "google-gtag", "custom"
+  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
     tracking_id          :
+    measurement_id       : "G-GZ9VM17R3L"
     anonymize_ip         : # true, false (default)
 
 
@@ -285,6 +286,6 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
