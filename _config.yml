@@ -24,7 +24,7 @@ description              : # "."
 url                      : "https://nasir17git.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "https://github.com/nasir17git/"
-teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+teaser                   : # path of fallback teaser image, e.g. "/assets/images/main.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "Rising from the ashes"
 # breadcrumbs            : false # true, false (default)
@@ -32,7 +32,7 @@ words_per_minute         : 200
 comments:
   provider               : "disqus"
   disqus:
-    shortname            : https-nasir17git-github-io
+    shortname            : "https-nasir17git-github-io"
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -96,7 +96,7 @@ social:
 analytics:
   provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
-    tracking_id          :
+    tracking_id          : "G-GZ9VM17R3L"
     measurement_id       : "G-GZ9VM17R3L"
     anonymize_ip         : # true, false (default)
 
@@ -104,14 +104,14 @@ analytics:
 # Site Author
 author:
   name             : "Nasir"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/main.png"
   bio              : "We, are our choices."
   location         : "Seoul"
   email            : "nasir17.dev@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: mailto:nasir17.dev@email.com
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -139,7 +139,7 @@ footer:
       # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
+      url: "https://github.com/nasir17git/"
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
@@ -219,7 +219,7 @@ sass:
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Seoul # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins (previously gems:)
@@ -287,5 +287,6 @@ defaults:
       author_profile: true
       read_time: true
       comments: true
-      share: true
-      related: true
+      share: false
+      related: false
+      toc: true
