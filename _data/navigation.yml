@@ -1,16 +1,15 @@
 
 # main links
 main:
-
   - title: "Main"
     url: https://nasir17git.github.io/
   - title: "Bootcamp"
-    url: /btcp/
-    children:
+    url: "/btcp/"
+    dropdown:
     - title: "TIL"
       url: "/btcp/til"
-    - title: "posts"
-      url: "/btcp/posts"
+    - title: "Docs"
+      url: "/btcp/docs"
   - title: "Showcase"
     url: /showcase/
   # - title: "Sitemap"
