@@ -3,14 +3,25 @@
 main:
   - title: "Main"
     url: https://nasir17git.github.io/
-  - title: "Bootcamp"
-    url: "/btcp/"
-    dropdown:
-    - title: "TIL"
-      url: "/btcp/til"
-    - title: "Docs"
-      url: "/btcp/docs"
-  - title: "Showcase"
+  - title: 'Bootcamp'
+    url: '/btcp/'
+  - title: 'Showcase'
     url: /showcase/
-  # - title: "Sitemap"
-#   #   url: /sitemap/
+
+# docs:
+#   - title: 'Bootcamp'
+#     children:
+#       - title: "TIL"
+#         url: /docs/til/
+#       - title: "Review"
+#         url: /docs/review/
+
+#   - title: 'Extras'
+#     children:
+#       - title: "AWS"
+#         url: /docs/aws/
+#       - title: "Baekjoon"
+#         url: /docs/baekjoon/
+
+#   - title: 'Showcase'
+

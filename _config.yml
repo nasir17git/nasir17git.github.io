@@ -9,6 +9,10 @@
 #
 # Review documentation to determine if you should use `theme` or `remote_theme`
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
+# 설정 주요 참고 블로그 https://ansohxxn.github.io/blog/category/
+# https://seungwubaek.github.io/blog/mmistake_layout/#page-title
+# https://devinlife.com/howto/
+
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
@@ -107,11 +111,11 @@ author:
   avatar           : "/assets/images/main.png"
   bio              : "We, are our choices."
   location         : "Seoul"
-  email            : "nasir17.dev@gmail.com"
+  email            : 
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: 
+      url: mailto:nasir17.dev@gmail.com
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -289,4 +293,7 @@ defaults:
       comments: true
       share: false
       related: false
+      sidebar_main: true
       toc: true
+      toc_sticky: true
+      toc_label: "Index"
