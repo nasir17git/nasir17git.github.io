@@ -25,8 +25,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "docs" %}
-                        <li><a href="/categories/docs" class="">Documents ({{category[1].size}})</a></li>
+                    {% if category[0] == "review" %}
+                        <li><a href="/categories/review" class="">Reviews ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -41,7 +41,15 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "baekjoon" %}
-                        <li><a href="/categories/baekjoon" class="">백준 알고리즘 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/baekjoon" class="">백준알고리즘 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Showcase</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "showcase" %}
+                        <li><a href="/categories/showcase" class="">Showcase ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

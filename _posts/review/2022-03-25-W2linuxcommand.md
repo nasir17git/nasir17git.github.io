@@ -1,10 +1,6 @@
 ---
 title:  'W2 리눅스 커맨드'
-excerpt: '2주차 수업내용 정리'
-categories: 'Docs'
-toc: true
-toc_sticky: true
-toc_label: 'Index'
+categories: 'review'
 ---
 
 

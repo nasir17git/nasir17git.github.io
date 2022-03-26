@@ -5,6 +5,8 @@ main:
     url: https://nasir17git.github.io/
   - title: 'Bootcamp'
     url: '/btcp/'
+  - title: 'Extras'
+    url: '/extra/'
   - title: 'Showcase'
     url: /showcase/
 
