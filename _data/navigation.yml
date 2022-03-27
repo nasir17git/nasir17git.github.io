@@ -1,8 +1,8 @@
 
 # main links
 main:
-  - title: "Main"
-    url: https://nasir17git.github.io/
+  - title: "Resume"
+    url: /resume/
   - title: 'Bootcamp'
     url: '/btcp/'
   - title: 'Extras'
