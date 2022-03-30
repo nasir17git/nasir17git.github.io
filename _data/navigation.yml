@@ -1,0 +1,29 @@
+
+# main links
+main:
+  - title: "Resume"
+    url: /resume/
+  - title: 'Bootcamp'
+    url: '/btcp/'
+  - title: 'Extras'
+    url: '/extra/'
+  - title: 'Showcase'
+    url: /showcase/
+
+# docs:
+#   - title: 'Bootcamp'
+#     children:
+#       - title: "TIL"
+#         url: /docs/til/
+#       - title: "Review"
+#         url: /docs/review/
+
+#   - title: 'Extras'
+#     children:
+#       - title: "AWS"
+#         url: /docs/aws/
+#       - title: "Baekjoon"
+#         url: /docs/baekjoon/
+
+#   - title: 'Showcase'
+
