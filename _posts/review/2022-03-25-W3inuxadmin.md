@@ -45,11 +45,16 @@ user1:x:1000
 `ls - l` 
 
 파일종류,권한,링크수,사용자,그룹,파일크기.수정시간,파일이름
+<<<<<<< HEAD
 -rwxr-xr-x. 1 encore encore 5720 Feb 21 14:32 testdir
+=======
+-rwxr-xr-x 1 encore encore 5720 Feb 21 14:32 testdir
+>>>>>>> 331409f7b239f77db563860a70d8c33ecd6b299f
 
 - \- 파일(-),디렉토리(d)
 - rwx 사용자 권한
 - r-x 그룹 권한
+<<<<<<< HEAD
 - r-x 기타(other)권한
 - . ACL 설정여부 . ACL 설정없음 / + ACL 설정있음
 
@@ -574,3 +579,8 @@ firewall-cmd
  + --permanent                            : 해당 옵션을 사용하지 않으면 현재 설정이 변경되며 영구설정은 지정이 안됨.
 --reload                                  : 런타임 구성 삭제, 영구 구성 적용
 --runtime-to-permanent                    : 실행중 설정을 영구 설정으로 변경
+=======
+
+
+chmod 권한명 경로/파일명
+>>>>>>> 331409f7b239f77db563860a70d8c33ecd6b299f
