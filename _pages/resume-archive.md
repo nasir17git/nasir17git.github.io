@@ -33,7 +33,7 @@ sidebar_main: true
 - Diligence
     - 2022 잔디심기
 
-     <img src="http://ghchart.rshah.org/32a852/nasir17git" alt="2022 잔디심기" />
+        <img src="http://ghchart.rshah.org/32a852/nasir17git" alt="2022 잔디심기" />
 
 ----
 
