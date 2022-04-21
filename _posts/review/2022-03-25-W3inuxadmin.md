@@ -3,9 +3,9 @@ title:  'W3 리눅스 어드민'
 categories: 'review'
 ---
 
-3주차에 진행된 Linux Admin 과정의 종합 정리.
+3주차에 진행된 Linux Admin 과정의 종합 정리.    
 
-Admin과정이 뭔가했는데 서버 운영 관련 주요 시스템 설정을 관리하는 법을 의미하는 듯 하다.
+Admin과정이 뭔가했는데 서버 운영 관련 주요 시스템 설정을 관리하는 법을 의미하는 듯 하다.     
 
 **주요 키워드**
 
@@ -24,61 +24,57 @@ Admin과정이 뭔가했는데 서버 운영 관련 주요 시스템 설정을 �
 |---|---|---|
 |useradd\groupadd|usermod\groupmod|userdel|groupdel|
 
-유저 비밀번호를 설정할때, -p 옵션 대신 passwd 명령어로 설정
-그냥-p로 할시 암호화가 되어있지않아 로그인 불가
+유저 비밀번호를 설정할때, -p 옵션 대신 passwd 명령어로 설정     
+그냥-p로 할시 암호화가 되어있지않아 로그인 불가    
 
-> /etc/passwd 유저 정보가 저장됨.
-유저명:암호:UID:GID:Comment:홈디렉토리:사용SHELL
-user1:x:1000:1000:usercommenttest:/home/user1:/bin/bash
+\> /etc/passwd 유저 정보가 저장됨.    
+유저명:암호:UID:GID:Comment:홈디렉토리:사용SHELL     
+user1:x:1000:1000:usercommenttest:/home/user1:/bin/bash    
 
-> /etc/group 그룹 정보가 저장됨.
-그룹명:암호:GID
-user1:x:1000
+\> /etc/group 그룹 정보가 저장됨.   
+그룹명:암호:GID       
+user1:x:1000   
 
-> /etc/shadow 유저 비밀번호 정보가 저장됨.
-> /etc/gshadow 그룹 비밀번호 정보가 저장됨.
+\> /etc/shadow 유저 비밀번호 정보가 저장됨.   
+\> /etc/gshadow 그룹 비밀번호 정보가 저장됨.   
 
 ### 권한설정 
 
 **리눅스 파일, 디렉토리 권한 확인**
 
-`ls - l` 
+`ls - l`   
 
-파일종류,권한,링크수,사용자,그룹,파일크기.수정시간,파일이름
-<<<<<<< HEAD
--rwxr-xr-x. 1 encore encore 5720 Feb 21 14:32 testdir
-=======
--rwxr-xr-x 1 encore encore 5720 Feb 21 14:32 testdir
->>>>>>> 331409f7b239f77db563860a70d8c33ecd6b299f
+파일종류,권한,링크수,사용자,그룹,파일크기.수정시간,파일이름       
+-rwxr-xr-x. 1 encore encore 5720 Feb 21 14:32 testdir   
 
 - \- 파일(-),디렉토리(d)
 - rwx 사용자 권한
 - r-x 그룹 권한
-<<<<<<< HEAD
 - r-x 기타(other)권한
 - . ACL 설정여부 . ACL 설정없음 / + ACL 설정있음
 
 **권한 변경**
 
-`chmod 권한명 경로/파일명`
+	chmod 권한명 경로/파일명
 
-- 기호로 변경하는법
-`chmod 카테고리,연산자기호,권한문자 대상 파일`
+- 기호로 변경하는법  
+	`chmod 카테고리,연산자기호,권한문자 대상 파일`
 
-|구분|문자|의미|
-|---|---|---|
-|카테고리|u\g\o\a|사용자\그룹\기타\전체|
-|연산자기호|+\-\=|권한부여\권한제거\권한설정|
-|권한문자|r\w\x|읽기권한\쓰기권한\실행권한|
+	|구분|문자|의미|
+	|---|---|---|
+	|카테고리|u\g\o\a|사용자\그룹\기타\전체|
+	|연산자기호|+\-\=|권한부여\권한제거\권한설정|
+	|권한문자|r\w\x|읽기권한\쓰기권한\실행권한|
 
 - 숫자로 변경하는법
-rwx로 표시되는 권한은 2진수 3자리로 간주하여 8진수 숫자로 권한을 부여할 수 있다
-`chmod 숫자 대상파일`
+	rwx로 표시되는 권한은 2진수 3자리로 간주하여 8진수 숫자로 권한을 부여할 수 있다   
+	`chmod 숫자 대상파일`
 
-|접근권한|숫자표시|
-|rwxrwxrwx|777|
-|rwxr-xr-x|755|
-|rw-r--r--|644|
+	|접근권한|숫자표시|
+	|:---:|:---:|
+	|rwxrwxrwx|777|
+	|rwxr-xr-x|755|
+	|rw-r--r--|644|
 
 **특수권한**
 
@@ -88,11 +84,11 @@ rwx로 표시되는 권한은 2진수 3자리로 간주하여 8진수 숫자로 
 	- setgid: 실행시에만 그룹 권한으로 실행; 권한을 빌려옴
 	- sticky bit: 생성은 자유롭지만 변경 및 삭제 불가; 공유모드
 
-|구분|문자|의미|
-|---|---|---|
-|uid|4000\u+s|실행권한이 있으면 소문자s, 없으면 대문자S|
-|gid|2000\g+s|실행권한이 있으면 소문자s, 없으면 대문자S|
-|sticky bit|1000\u+t|실행권한이 있으면 소문자t, 없으면 대문자T|
+	|구분|문자|의미|
+	|---|---|---|
+	|uid|4000\u+s|실행권한이 있으면 소문자s, 없으면 대문자S|
+	|gid|2000\g+s|실행권한이 있으면 소문자s, 없으면 대문자S|
+	|sticky bit|1000\u+t|실행권한이 있으면 소문자t, 없으면 대문자T|
 
 - ACL
 - Access Control List, 파일이나 디렉토리에 특정 사용자 또는 그룹의 권한 부여
@@ -105,49 +101,50 @@ rwx로 표시되는 권한은 2진수 3자리로 간주하여 8진수 숫자로 
 
 1. 단발성 작업 예약
 
-- at 명령어
-- 작업 저장 경로: /var/spool/at/
+	- at 명령어
+	- 작업 저장 경로: /var/spool/at/
 
-```
-at [option] "시간"
-"시간" > 시간이나 yy-mm-dd
--t 시간형식 > 자세한 입력방법은 man at 참고
--f 파일명 > 파일 실행
--l > 예약 작업 리스트 확인
--c 작업번호 > 예약 작업 상세보기
--d 작업번호 > 예약 작업 삭제
-```
+	```
+	at [option] "시간"
+	"시간" > 시간이나 yy-mm-dd
+	-t 시간형식 > 자세한 입력방법은 man at 참고
+	-f 파일명 > 파일 실행
+	-l > 예약 작업 리스트 확인
+	-c 작업번호 > 예약 작업 상세보기
+	-d 작업번호 > 예약 작업 삭제
+	```
 
 
 
 2. 반복적 작업 예약
 
-- crontab 명령어
-- 작업 저장 경로: /var/spool/cron
-- 실행 로그 확인: cat /var/log/cron
-```
-vi /etc/crontab 파일 편집으로 작성 > * * * * * 유저명 커맨드
-또는 
-crontab 옵션 
--e > 작성 및 편집
--l > 예약 작업 확인
--r > 예약 작업 전체 삭제
-```
+	- crontab 명령어
+	- 작업 저장 경로: /var/spool/cron
+	- 실행 로그 확인: cat /var/log/cron
 
-.---------------- minute (0 - 59)
-|  .------------- hour (0 - 23)
-|  |  .---------- day of month (1 - 31)
-|  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
-|  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
-|  |  |  |  |
-\*   *  *  *  * user-name  command to be executed
-분 시 일 월  요일   사용자계정   명령어
-3 9 3 * * nasir17 ps -aux > ~/pslis_”$(date ‘+%y%m’)”.txt
-*/5 15 * * 2 유저명 할일
-0 8,19 1-7 * 3 유저명 할일
+	```
+	vi /etc/crontab 파일 편집으로 작성 > * * * * * 유저명 커맨드
+	또는 
+	crontab 옵션 
+	-e > 작성 및 편집
+	-l > 예약 작업 확인
+	-r > 예약 작업 전체 삭제
+	```
 
-메타 문자 사용 가능
-\* 전체, - 범위지정, / 조건에 대한 주기
+	.---------------- minute (0 - 59)    
+	|  .------------- hour (0 - 23)    
+	|  |  .---------- day of month (1 - 31)    
+	|  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...   
+	|  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat     
+	|  |  |  |  |
+	\*   *  *  *  * user-name  command to be executed    
+	분 시 일 월  요일   사용자계정   명령어    
+	3 9 3 * * nasir17 ps -aux > ~/pslis_”$(date ‘+%y%m’)”.txt    
+	*/5 15 * * 2 유저명 할일   
+	0 8,19 1-7 * 3 유저명 할일    
+
+	메타 문자 사용 가능    
+	\* 전체, - 범위지정, / 조건에 대한 주기    
 
 ### 소유권 변경
 
@@ -165,43 +162,43 @@ crontab 옵션
     - fdisk, gdisk  대화형으로 가능, 명령어가 한 문자  (MBR , 요즘은 gpt)
     - parted : 대화형 / 쉘 둘다 가능.  (MBR, GPT)
 
-```
-ls -l /dev/sd*   장치인식 확인
-blkid  : 장치의 UUID  확인
-lsblk :  장치 목록 ( 마운트 포인트 등)
-```
+	```
+	ls -l /dev/sd*   장치인식 확인
+	blkid  : 장치의 UUID  확인
+	lsblk :  장치 목록 ( 마운트 포인트 등)
+	```
 
 **파일시스템 생성**
 
-```
-mkfs -t xfs -d name=/dev/sdc1
-mkfs.xfs /dev/sdc1
--f 옵션으로 강제 생성 가능
-```
+	```
+	mkfs -t xfs -d name=/dev/sdc1
+	mkfs.xfs /dev/sdc1
+	-f 옵션으로 강제 생성 가능
+	```
 
 **마운트**
 
 1. 수동 마운트
 
-```
-mount 장치경로 마운트포인트
-mount /dev/sdc1 /mounttest
-마운트해제는 unmount 장치경로 또는 마운트포인트
-```
+	```
+	mount 장치경로 마운트포인트
+	mount /dev/sdc1 /mounttest
+	마운트해제는 unmount 장치경로 또는 마운트포인트
+	```
 
 2. 자동 마운트
 
-```
-blkid 명령어로 장치의 UUID 확인
-vi /etc/fstab 에서 필요한 정보를 기입하여 자동마운트 입력
-```
+	```
+	blkid 명령어로 장치의 UUID 확인
+	vi /etc/fstab 에서 필요한 정보를 기입하여 자동마운트 입력
+	```
 
 **fdisk 파티셔닝**
 
-```
-fdisk 옵션 디렉토리경로
-fdisk -l 현재 파티셔닝 상황 조회
-```
+	```
+	fdisk 옵션 디렉토리경로
+	fdisk -l 현재 파티셔닝 상황 조회
+	```
 
 1. fdisk /dev/sdc > fdisk 파티셔닝 시작
 2. m 또는 help > 도움말 조회
@@ -215,10 +212,10 @@ fdisk -l 현재 파티셔닝 상황 조회
 
 **parted 파티셔닝**
 
-```
-parted 옵션 디렉토리경로
-parted -l 현재 파티셔닝 상황 조회
-```
+	```
+	parted 옵션 디렉토리경로
+	parted -l 현재 파티셔닝 상황 조회
+	```
 
 1. parted /dev/sdc > parted 파티셔닝 시작
 2. help > 도움말 보기
@@ -242,8 +239,7 @@ parted -l 현재 파티셔닝 상황 조회
 
 - 디스크장치 여러개 장착 > 1개 파티셔닝 >  Physical volume 생성 > Volume Group  생성 > Logical Volume 생성
 
-시스템을 끄고, disk 장착 > 부팅 > fdisk로 파티셔닝 (type : linux lvm) > 
-pv 생성 > vg 생성 > lv 생성 > 파일 시스템 생성 > 마운트
+시스템을 끄고, disk 장착 > 부팅 > fdisk로 파티셔닝 (type : linux lvm) > pv 생성 > vg 생성 > lv 생성 > 파일 시스템 생성 > 마운트
 
 ### RAID
 
@@ -251,8 +247,8 @@ pv 생성 > vg 생성 > lv 생성 > 파일 시스템 생성 > 마운트
 
 ### Systemd unit
 
-#systemctl list-units
-journalctl
+#systemctl list-units   
+journalctl    
 
 ### 부팅 프로세스
 
@@ -579,8 +575,3 @@ firewall-cmd
  + --permanent                            : 해당 옵션을 사용하지 않으면 현재 설정이 변경되며 영구설정은 지정이 안됨.
 --reload                                  : 런타임 구성 삭제, 영구 구성 적용
 --runtime-to-permanent                    : 실행중 설정을 영구 설정으로 변경
-=======
-
-
-chmod 권한명 경로/파일명
->>>>>>> 331409f7b239f77db563860a70d8c33ecd6b299f
