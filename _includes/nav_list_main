@@ -49,7 +49,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "showcase" %}
-                        <li><a href="/categories/showcase" class="">Showcase ({{category[1].size}})</a></li>
+                        <li><a href="/showcase" class="">Showcase ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
