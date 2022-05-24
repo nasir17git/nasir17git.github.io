@@ -25,7 +25,7 @@ title                    : "Be Humble"
 title_separator          : " "
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "JongJin Kim"
-description              : # "."
+description              : "Document what I tried"
 url                      : "https://nasir17git.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "nasir17git/nasir17git.github.io"
