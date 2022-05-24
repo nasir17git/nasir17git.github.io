@@ -31,7 +31,7 @@ baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "nasir17git/nasir17git.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/main.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "Rising from the ashes"
+masthead_title           : "기록은 기억을 지배한다"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
