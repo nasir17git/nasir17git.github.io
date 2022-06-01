@@ -1,0 +1,301 @@
+
+ 1)  Run Jenkins in a Docker Container
+ 2)  Create Multibranch Pipeline with Git
+ 3)  Basic Jenkinsfile Syntax
+ 4)  Git Integration - Trigger Jenkins build automatically 
+
+
+## [Run Jenkins in Docker Container - Jenkins Pipeline Tutorial for Beginners 1/4](https://youtu.be/pMO26j2OUME)
+
+Learn how to run Jenkins in a Docker Container.
+
+* Pull Jenkins Image and run container
+* Initialize Jenkins and install default plugins
+* Create First Admin User
+* Types of Jenkins Projects
+
+### 개요
+
+- Jenkins Container Setup
+- Create Multibranch Pipeline w/Git Repo
+- Types of Credentials
+- Basics of Jenkinsfile
+
+
+Users           Git Repo                  Jenkins  
+        >Commit           >trigger build 
+
+
+1. Jenkins Container Setup
+    - DockerHub의 Official Image는 DEPRECATED; 대신 lts 버전사용 
+
+DockerHub의 Official Image는 DEPRECATED; 대신 lts 버전사용
+
+docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+
+- Expose port 8080 > By default runs on that port
+- Expose port 50000 > Master/Slave Commun.
+- Run in detached mode > run con. in bg.
+- Bind named volume > persist data of jenkins
+  - 새로 생성대신 기존의 볼륨을사용하면(Host Vol) 권한 이슈 생길 수 있음
+
+- 설치 수행 이후, 초기 비밀번호 생성됨
+- localhost:8080 으로 Jenkins 실행하여 초기 비밀번호 입력 후 필요 플러그인 설치등 마무리
+- 사용중인 App과 버전관리 도구에 따라 상이한 플러그인이 필요함
+
+Types of Jenkins Projects
+|Freestyle|Pipeline|Multibranch</br>Pipeline|
+|---|---|---|
+|simple,single tasks</br>e.g. run tests|whole delivery cycle</br>chains of Freestyles</br>e.g. test\|build\|package\|deploy\|...<br>for a **single branch**|similar pipeline</br> for **multiple branches**|
+
+ ## [Create Multibranch Pipeline with Git - Jenkins Pipeline Tutorial for Beginners 2/4](https://youtu.be/tuxO7ZXplRE)
+
+
+Create Multibranch Pipeline, configure credentials in Jenkins and discover branches by names.
+
+In this video I show how to create a multibranch pipeline, explain how credentials plugin work in Jenkins and configure to filter branches by name.
+
+* Create Multibranch Pipeline
+* Explain how Credentials Plugin work in Jenkins
+* Filter Branches by Name
+
+
+Cre8 Multibranch Pipeline w/Git
+
+- Credentials in Jenkins
+- Filter Branches by Name
+
+Create new multibranch pipeline > Multiple Options
+
+Branch source=Project u want to build
+git https://gitlab.com/nanuchi/techworld-js-docker-demo-app.git
+
+behaviors
+filter by name(w/regular exp)
+
+build conf. 
+build from Jenkinsfile
+
+Credentials in J
+"Credentials" Plugin to store&manage them centrally
+
+Credential Scopes
+  - System: Only avail. on J server
+            Not for J jobs, 관리자가 수동으로 작업할시에 사용되는 Cred.
+  - Global: Everywhere accessible
+  - Project: Limited to pjt, ONLY w/multibranch pipeline
+
+Cred Types
+  - Username&pwd 
+  - Certificate
+  - Secret File
+  - New types based on plugins (ex. Github access token)
+
+ID = Reference for ur cred.
+
+create 1 for global, 1 for system
+
+Credentials:
+  - on the main page
+  - on the pipeline page
+    - System cred. NOT accessible from pjt cred.
+
+Discover branches by Name
+ filter by name(w/regular exp)
+    ^dev|master|feature.*$ (|=or)
+    해당 3개의 브랜치만 사용. 버그픽스니 기타 다른 브랜치 build 안함
+
+## [Jenkinsfile - Jenkins Pipeline Tutorial for Beginners 3/4](https://youtu.be/MY1w7sWW5ms)
+
+In this video I show the syntax of a Jenkinsfile, explain the differences between scripted and declarative syntax. I also show how to test something out in a Jenkinsfile by replaying it and how to skip stages via restart option.
+
+▬▬▬▬▬▬ Topics covered
+ * Pipeline Syntax: Scripted vs. Declarative
+ * Basic Syntax
+ * Test something in Jenkinsfile - Replay Jenkinsfile
+ * Restart from stage
+Basic Jfile
+- Pipeline Syntax
+- Replay
+- Restart from stage
+
+Pipeline Syntax
+
+|Scripted|Declarative|
+|---|---|
+|1st. syntax</br>Groovy engine</br>advanced scripting capabilities,high flexibility</br>difficult to start|Recent addition</br>easier to get started + powerful</br>pre-defined structure</br>|
+
+Required Fields of Jfile - json format
+
+- "pipeline": must be top-level
+- "agent": where to execute 
+         마스터/슬레이브/윈도우노드/리눅스노드/etc/
+- "stages": where the "work" happens
+  - "stages" & relative steps
+    - stage("build"){ steps{sh 'npm install' sh 'npm build'} }
+    - stage("test"){ steps{echo 'testing the app...'} }
+    - stage("deploy"){ steps{echo 'deploying the app...'} }
+
+Test changes in a Jfile-Replay
+
+To try something out
+- Adjust Jfile
+- Commit
+- Check out
+- Re-build
+
+Build 히스토리에서 Replay 선택, Jfile의 원하는 부분을 수정하고 Run
+    - stage("build"){ echo'building the app...' script{def test = 2+2>3? 'cool':'not cool' echo test} }
+
+
+Restart from stage
+from build history, select that option
+Skips the other stages
+
+
+ ## [Trigger Jenkins Build automatically - Jenkins Pipeline Tutorial for Beginners 4/4](https://youtu.be/CmwTPxdx24Y)
+
+ Jenkins Gitlab Integration. Learn how to trigger build on commit.
+
+In this video I show how to trigger the Jenkins build after a commit. Also I show how to configure Jenkins polling for any changes.
+
+This video covers the following:
+ * Push Notification
+ * Polling
+
+Trigger J build automatically Git Integration
+
+- Push Notification
+- Polling for Changes
+
+2 ways to trigger build
+|Push Notification|Polling|
+|---|---|
+|Version Control notifies J on new commit</br>more efficient!|J polls in regular intervals|
+
+1st option Push Noti
+Trigger build
+need to set up both J & G
+1. Inst. J plugin based on VC System
+2. Conf. Repository Server Hostname
+3. Add Access Token or Credential
+- 대충 webhook url 가져와서 서로 걸어두면 된다는 말
+- J가 웹후크를 통해 코드변경사항을 수신
+
+2nd Option. Polling
+Scan Multibranch Pipeline Triggers
+J polls every 1min > Gitlab answers Y/N
+
+Good strategy to conf. both as a backup plan
+
+
+
+## [Configure Build Tools in Jenkins and Jenkinsfile | Jenkins Tutorial](https://youtu.be/L9Ite-1pEU8)
+
+Learn how to configure build tools in Jenkins. Configure Gradle and Yarn in Jenkins and use it in Jenkinsfile.
+
+► Subscribe To Me on Youtube: https://bit.ly/2z5rvTV
+
+Using Jenkins you want to build and package your application. So, depending on your application language you need a different build tool available on Jenkins. In this video I show you how to install and configure Gradle, Yarn and NPM build tools in Jenkins and how to use those tools in Jenkinsfile.
+
+▬▬▬▬▬▬ T I M E S T A M P S
+0:00 - Intro
+1:13 - How to use build tools in Jenkins
+1:57 - Check if your build tool is already available?
+4:07 - Install npm and yarn from plugins
+7:09 - Use build tools (gradle and yarn) in Jenkinsfile
+10:43 - Alternative to using build tools in Jenkinsfile
+
+- Develop ur app
+- J should build and package that app
+- need a build tool available on J
+
+
+4 main build tools
+
+- Backend
+  - Maven
+  - Gradle
+- Frontend/Javascript
+  - npm
+  - yarn
+
+How to use these tools in J?
+- some build tools are already installed
+- The rest, need to inst&conf
+
+1. Check if tool already available? If Y, Conf it.
+2. Inst. it from Plugins & Do step 1.
+3. Use it in ur build config (ex. in Jenkinsfile)
+
+Step 1.
+Global tool conf.
+Gradle&Maven은 설치되어있음. npm과 yarn 설치필요
+G&M은 구성만 하면됨
+
+Step 2.
+Manage plugins
+Add NodeJS(included npm), 
+Then Do step 1. again
+
+Global npm package to install > yarn@1.13.0
+
+Create new Multibranch Pipelinew
+
+Step 3.
+stage("run FE"{ steps { echo 'executing yarn...' } }
+stage("run BE"{ steps { echo 'executing gradle...'} }
+
+Wrapper를 이용해서 step 내용 정의
+nodejs('Node-10.17'){ sh 'yarn install' }
+withGradle() { sh './gradlew -v'}
+
+### Alternative to using tools w/o wrapper
+
+Only 3 tools supported; maven, gradle, jdk
+  - agent와 stages 사이에 tools 삽입
+  - tools { gradle 'Gradle-6.2' }
+
+
+## [Complete Jenkins Pipeline Tutorial | Jenkinsfile explained](https://youtu.be/7KCS70sCoK0)
+
+In this complete Jenkins Pipeline Tutorial, I explain everything you need to know about Jenkinsfile.
+
+► Subscribe To Me On Youtube: https://bit.ly/2z5rvTV
+
+This complete Jenkins Pipeline Tutorial will help you configure build pipeline for your own project using Jenkinsfile.
+
+Gitlab Link: https://gitlab.com/nanuchi/techworld-...
+
+▬▬▬▬▬▬ T I M E S T A M P S ⏰  ▬▬▬▬▬▬
+0:00    Intro
+0:11    What is Jenkinsfile?
+0:50    From Scripted to Declarative Pipeline Syntax
+2:48    Basic Structure of Jenkinsfile
+8:40    Post Build Actions in Jenkinsfile
+10:15  Define Conditionals / When expression
+12:45  Using Environmental Variables in Jenkinsfile
+20:13  Using Tools attribute for making build tools available
+22:30  Using Parameters for a Parameterized Build
+27:29  Using external Groovy scripts
+
+Jenkinsfile Tutorial for Beginners
+
+- Definition & Syntax for Jfile
+- Jenkinsfile
+  - environmental variables
+  - parameters
+  - conditionals
+  - groovy script
+  - tools 
+  - post
+
+
+What is Jfile?
+GUI 환경에서 젠킨스 프로젝트 생성 대신, 프로젝트 파이프라인을 코드화하여 생성
+- scripted pipeline
+- is created in ur git repository
+
+From Scripted to Declarative Pipeline Syntax & Basic Structure
+
+1. create Jenkinsfile in repository
