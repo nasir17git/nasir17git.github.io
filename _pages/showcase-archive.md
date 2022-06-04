@@ -11,8 +11,8 @@ author_profile: true
 sidebar_main: true
 feature_row:
   - image_path: /assets/showcase/minipjt1/main.png
-    title: "미니프로젝트1) 리눅스 서버 인프라 구축"
-    excerpt: "인프라구현이라는 대주제에서 보안의 중요성이라는 소주제를 찾아 완성하였습니다."
+    title: "PJT1) 리눅스 서버 인프라 구축"
+    excerpt: "로컬 VM상에서 WEB 서비스 배포 인프라를 구축하였습니다."
     url: "https://nasir17git.github.io/showcase/pjt1/"
     btn_label: "Read More"
     btn_class: "btn--primary"
@@ -24,12 +24,12 @@ feature_row:
     btn_class: "btn--primary"
   - image_path: /assets/showcase/aws/inbox.png
     title: "AWS 액세스 키 해킹"
-    excerpt: "관리 부주의로 인해 계정이 노출되었고, 피해금액 환불까지의 과정을 정리하였습니다."
+    excerpt: "관리 부주의로 인해 계정이 노출되었습니다. 피해금액 환불까지의 과정을 정리하였습니다."
     url: "https://nasir17git.github.io/showcase/awshack/"
     btn_label: "Read More"
     btn_class: "btn--primary"
   - image_path: /assets/showcase/pjt/main.png
-    title: "미니프로젝트2 AWS 기반 고가용성 Wordpress 서비스 아키텍쳐"
+    title: "PJT2) AWS 기반 고가용성 Wordpress 서비스 아키텍쳐"
     excerpt: "AWS Free tier 제약 조건 하에서, 3계층 LAMP서버 및 보안체계를 구축하고, Slack 메신저와 연동하였습니다."
     url: "https://nasir17git.github.io/showcase/pjt2/"
     btn_label: "Read More"
@@ -47,7 +47,7 @@ feature_row:
     btn_label: "Read More"
     btn_class: "btn--primary"
   - image_path: /assets/images/pjt3arch.png
-    title: "미니프로젝트3 Git과 Ansible을 활용한 소규모 Wordpress 배포 CI/CD 파이프라인 구축"
+    title: "PJT3) Git과 Ansible을 활용한 WP서비스 배포 자동화 환경 구축"
     excerpt: "Git과 Ansible을 사용해 LAMP 서버 구축 및 배포의 자동화를 이루고, Live Demo를 진행하였습니다"
     url: "https://nasir17git.github.io/showcase/pjt3/"
     btn_label: "Read More"
