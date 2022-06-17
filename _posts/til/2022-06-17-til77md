@@ -3,12 +3,20 @@ title:  "220617 Today I Learned"
 categories: 'til'
 ---
 
-### 일지
+### 일지  
+
 
 장기 최종 프로젝트 시작 주  
 슬슬 떨리기 시작하는게 느껴진다  
 화이팅 화이팅  
 
+---
+
+AZ-900 1~50  
+[51부터](https://www.examtopics.com/exams/microsoft/az-900/view/11/)  
+PaaS/public,private,hybrid만 겁나물어보네  
+확실히 영어로 읽으니까 푸는속도가 느려짐. 반복숙달필요  
+Q21 Drag-drop  
 
 ### 오늘의 할일
 
@@ -18,3 +26,12 @@ categories: 'til'
 
 
 ---
+
+|중요도|문장|
+|:---:|:---|
+||동일 사이즈의 VM을 사용해도, 디스크 구성에 따라 다른 비용 청구가능|
+||PaaS는 비용변경을 통한 추가메모리부여 불가능|
+|V|CosmosDB는 서버리스X, PaaS O|
+|V|개별 리소스는 하나의 리소스 그룹에 위치|
+||portal.azure.com|
+||50번문제|
