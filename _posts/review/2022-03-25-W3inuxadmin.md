@@ -254,137 +254,138 @@ journalctl
 
 1. 부팅 과정
 
-1)부팅 절차를 왜 알아야하나?
- 시스템 부팅중에 문제 발생시 해결하기 위해.
-2)init 부팅 과정
-3)systmed 부팅 과정
+	- 부팅 절차를 왜 알아야하나?
+		- 시스템 부팅중에 문제 발생시 해결하기 위해.
+	- init 부팅 과정
+	- systmed 부팅 과정
 
 2. target  종류
- 1) default.target
-	-부팅 후 가장 먼저 실행되는 target으로 연결되는 심볼릭 링크 파일
-	#ls -l /etc/systemd/system/default.target
-	-주로 multi-user.target 또는 graphical.target으로 연결됨.	
- 2) graphical.target
-	-그래픽 환경 GUI의 다중 사용자 모드 , runlevel 5
-	-사용자 가능
-	-시스템이 부팅될 때 graphical.target 단계에서
-	/etc/systemd/system/graphical.target.wants 
-	내에 존재하는 unit을 실행함.
-	-target 유닛 파일의 Requires/After 옵션에 의해 
-	multi-user.target 지정되어 있음.
-	-> multi-user.target이 먼저 활성화필요
-	-multi-user.target 환경과 유사
-	-Server with GUI 또는 GNOME Desktop 패키지 설치해야함
- 3) multi-user.target
-	-커맨드 환경CLI의 다중 사용자 모드 , runlevel 2/3/4
-	-사용자 가능
-	-init 프로세스의 런레벨 3과 맵핑됨.-> runlevel3.target도 가능
-	-시스템이 부팅될 때 multi-user.target 단계에서
-	 /etc/systemd/systemd/multi-user.target.wants 
-	 내에 존재하는 unit을 실행함.
-	-target 유닛 파일의 Requires/After 옵션에 의해
-	 basic.target이 지정되어 있음 (basic.target이 먼저 실행 필요)
-	-/(루트), /etc/fstab 마운트
-	-대부분의 서비스 실행
-	-NIC 활성화, 여러 사용자 로그인 가능
-	-그래픽 도구 사용 못함.
- 4) basic.target
-	-firewalld, microcode, SELinux, 커널 메시지와 관련된 서비스를 시작하거나 모듈을 로드(Load) 함
-	-시스템이 부팅될 때 basic.target 단계에서
-	 /etc/systemd/system/basic.target.wants
-	 내에 존재하는 unit을 실행함.
-	-target 유닛 파일의 Requires/After 옵션에 의해
-	 sysinit.target이 지정되어 있음 (sysinit.target이 먼저 실행 필요)
- 5) sysinit.target
-	-사용자 사용 불가
-	-시스템 마운트, 스왑, 커널의 추가 옵션을 실행하는 서비스를 시작.
-	-시스템이 부팅될 때 sysinit.target 단계에서
-	 /etc/systemd/system/sysinit.target.wants
-	 내에 존재하는 unit을 실행함 
-	-target 유닛 파일의 Requires/After 옵션에 의해
-	 local-fs.target이 지정되어 있음 (local-fs.target 먼저 실행 필요)
- 6) local-fs.target
-	-/etc/fstab에 등록된 마운트 정보로 파일시스템을 마운트 함.
-	-target 유닛 파일의 After 옵션에 의해 local-fs-pre.target 지정.
-	-> local-fs-pre.target 먼저 활성화 필요
- 7) poweroff.target
-	-시스템 shutdown -> poweroff  , runlevel 0
-	-실행 중인 서비스만 종료 (간단/빠르게 종료)
-	#systemctl poweroff
-	#shutdown -h now
- 8) reboot.target
-	-시스템 shutdown -> reboot , runlevel 6
-	#systemctl reboot
-	#shutdown -r now
- 9) emergency.target
-	-긴급 쉘 emergency shell. 
-	-가능한한 최소한의 환경 제공. (root 인증 필수)
-	-부팅 중 오류 발생 시 rescue.target 부팅됨 -> 복구 쉘 -> 트리블슈팅
-	-rescue.target 실행전 오류 발생시 emergency.target 지정 -> 복구 쉘 -> 트러블슈팅
-	- /(루트) : 읽기 전용ro 마운트 (그외 unmount)
-	-네트워크 비활성화. 최소한의 서비스만 활성화
-	-시스템 파일 수정시 읽기쓰기rw로 리마운트 필요
- 10) rescue.target (복구)
-	-복구 쉘 rescue shell  , runlevel 1
-	-사용자 가능 (단일 사용자, root 인증 필수)
-	-부팅 시 부팅을 완료할 수 없을 때 사용
-	-sysinit.target, rescue.service 활성화되어야 rescue.target활성화됨.
-	-/(루트) : 읽기쓰기로 마운트
-	-모든 파일 시스템을 마운트 시도, 중요한 서비스 시작함.
-	-NIC 비활성화, 여러 사용자 로그인 안됨.
+	1. default.target
+		- 부팅 후 가장 먼저 실행되는 target으로 연결되는 심볼릭 링크 파일
+			- `#ls -l /etc/systemd/system/default.target`
+		- 주로 multi-user.target 또는 graphical.target으로 연결됨
+	2. graphical.target
+		- 그래픽 환경 GUI의 다중 사용자 모드 , runlevel 5
+		- 사용자화 가능
+		- 시스템이 부팅될 때 graphical.target 단계에서, /etc/systemd/system/graphical.target.wants 내에 존재하는 unit을 실행함.
+		- target 유닛 파일의 Requires/After 옵션에 의해 multi-user.target 지정되어 있음.
+			- multi-user.target을 먼저 활성화 해야함
+		- multi-user.target 환경과 유사
+		- Server with GUI 또는 GNOME Desktop 패키지 설치해야함
+	3. multi-user.target
+		- 커맨드 환경CLI의 다중 사용자 모드 , runlevel 2/3/4
+		- 사용자화 가능
+		- init 프로세스의 런레벨 3과 맵핑됨.-> runlevel3.target도 가능
+		- 시스템이 부팅될 때 multi-user.target 단계에서 /etc/systemd/systemd/multi-user.target.wants 내에 존재하는 unit을 실행함.
+		- target 유닛 파일의 Requires/After 옵션에 의해 basic.target이 지정되어 있음 (basic.target이 먼저 실행 필요)
+		- /(루트), /etc/fstab 마운트
+		- 대부분의 서비스 실행
+		- NIC 활성화, 여러 사용자 로그인 가능
+		- 그래픽 도구 사용 못함.
+	4. basic.target
+		- firewalld, microcode, SELinux, 커널 메시지와 관련된 서비스를 시작하거나 모듈을 로드(Load) 함
+		- 시스템이 부팅될 때 basic.target 단계에서 /etc/systemd/system/basic.target.wants 내에 존재하는 unit을 실행함.
+		- target 유닛 파일의 Requires/After 옵션에 의해 sysinit.target이 지정되어 있음 (sysinit.target이 먼저 실행 필요)
+	5. sysinit.target
+		- 사용자 사용 불가
+		- 시스템 마운트, 스왑, 커널의 추가 옵션을 실행하는 서비스를 시작.
+		- 시스템이 부팅될 때 sysinit.target 단계에서 /etc/systemd/system/sysinit.target.wants 내에 존재하는 unit을 실행함 
+		- target 유닛 파일의 Requires/After 옵션에 의해 local-fs.target이 지정되어 있음 (local-fs.target 먼저 실행 필요)
+	6. local-fs.target
+		- /etc/fstab에 등록된 마운트 정보로 파일시스템을 마운트 함.
+		- target 유닛 파일의 After 옵션에 의해 local-fs-pre.target 지정.
+			- local-fs-pre.target 먼저 활성화 필요
+	7. poweroff.target
+		- 시스템 shutdown -> poweroff  , runlevel 0
+		- 실행 중인 서비스만 종료 (간단/빠르게 종료)    
+		`#systemctl poweroff`    
+		`#shutdown -h now`
+	8. reboot.target
+		- 시스템 shutdown -> reboot , runlevel 6    
+		`#systemctl reboot`    
+		`#shutdown -r now`    
+	9. emergency.target
+		- 긴급 쉘 emergency shell. 
+		- 가능한한 최소한의 환경 제공. (root 인증 필수)
+		- 부팅 중 오류 발생 시 rescue.target 부팅됨 -> 복구 쉘 -> 트리블슈팅
+		- rescue.target 실행전 오류 발생시 emergency.target 지정 -> 복구 쉘 -> 트러블슈팅
+		- /(루트) : 읽기 전용ro 마운트 (그외 unmount)
+		- 네트워크 비활성화. 최소한의 서비스만 활성화
+		- 시스템 파일 수정시 읽기쓰기rw로 리마운트 필요
+	10. rescue.target (복구)
+		- 복구 쉘 rescue shell  , runlevel 1
+		- 사용자 가능 (단일 사용자, root 인증 필수)
+		- 부팅 시 부팅을 완료할 수 없을 때 사용
+		- sysinit.target, rescue.service 활성화되어야 rescue.target활성화됨.
+		- /(루트) : 읽기쓰기로 마운트
+		- 모든 파일 시스템을 마운트 시도, 중요한 서비스 시작함.
+		- NIC 비활성화, 여러 사용자 로그인 안됨.
 
 3. default target 설정 (시스템을 켰을 때, 어떤 타켓으로 부팅을 하겠는지 기본 값)
- 런레벨 확인 #who -r
- default.target 확인 #systemctl get-default
- default.target 설정
-   #systemctl set-default multi-user.target
-   #systemctl set-default graphical.target
-   #shutdown -r now
+	- 런레벨 확인 #who -r
+	- default.target 확인 #systemctl get-default
+	- default.target 설정
+		```
+		#systemctl set-default multi-user.target
+		#systemctl set-default graphical.target
+		#shutdown -r now
+		```
 
-지금 현재 target unit 전환 
-   #systemtcl isolate multi-user.target
+	- 지금 현재 target unit 전환    
+   `#systemtcl isolate multi-user.target`     
 
 4. 부팅 과정 중 target unit 지정
- boot loader  중단 e(편집) -> linux16 라인 마지막에 systemd.unit=target-unit입력 -> 
- -> ctrl+x (실행) 부팅이어서
+	- boot loader  중단 e(편집) -> linux16 라인 마지막에 systemd.unit=target-unit입력 
+	- -> ctrl+x (실행) 부팅이어서
 
 
-부트 로더 (GRUB)
-5. root 암호 재설정
- 1) 시스템 재부팅
- 2) 부트 로더 (boot loader) 중 화살표 (카운트 중단) -> 커널이미지 선택 (가장 최신 커널이미지) -> e 커널항목 수정
- 3) linux16 라인 끝에 -> rd.break -> ctrl+x    (램디스크 초기화를 중단)
- 4) "/" 읽기전용 마운트라서 읽기쓰기로 remount
-	#mount | grep -w '/sysroot'
-	#mount -o remount,rw /sysroot
-	#chroot /sysroot   (루트 디렉토리 변경)
- 5) 암호 변경 #passwd
- 6) label 재지정 (chroot 명령어 입력시 레이블정보가 제거됨)
-	#touch /.autorelabel
-	#exit
-	#reboot (재부팅)
+### 부트 로더 (GRUB)
+
+- root 암호 재설정
+	1. 시스템 재부팅
+	2. 부트 로더 (boot loader) 중 화살표 (카운트 중단) -> 커널이미지 선택 (가장 최신 커널이미지) -> e 커널항목 수정
+	3. linux16 라인 끝에 -> rd.break -> ctrl+x    (램디스크 초기화를 중단)
+	4. "/" 읽기전용 마운트라서 읽기쓰기로 remount
+		```
+		#mount | grep -w '/sysroot'
+		#mount -o remount,rw /sysroot
+		#chroot /sysroot   (루트 디렉토리 변경)
+		```
+	5. 암호 변경 #passwd
+	6. label 재지정 (chroot 명령어 입력시 레이블정보가 제거됨)
+		```
+		#touch /.autorelabel
+		#exit
+		#reboot (재부팅)
+		```
 
 systemd-analyze 명령어 : systemd 분석
 
 ### 패키지 관리
 
-소프트웨어 패키지  : rpm , yum
+**소프트웨어 패키지  : rpm , yum**    
 
-처음에 프로그램 설치 시 : 아카이브 파일이나 압축파일 다운로드 -> 원본 소스 파일 추출 -> 컴파일 -> 실행파일을 설치   :번거로움
-쉽게 설치하기 위해 소프트웨어 패키지 (software package) : 특정 서비스를 운영하기 위해 필요로 하는 프로그램 또는 도구를 쉽게 설치하고 관리 할 수 있도록 하나의 패키지로 묶어서 제공하는 것.
+처음에 프로그램 설치 시 : 아카이브 파일이나 압축파일 다운로드 -> 원본 소스 파일 추출 -> 컴파일 -> 실행파일을 설치   :번거로움    	
 
-rpm
-RPM : redhat package manager 패키지 관리 도구
+쉽게 설치하기 위해 소프트웨어 패키지 (software package) : 특정 서비스를 운영하기 위해 필요로 하는 프로그램 또는 도구를 쉽게 설치하고 관리 할 수 있도록 하나의 패키지로 묶어서 제공하는 것.    
 
-RPM 패키지 파일 형식 : httpd-2.4.6-40.el7.centos.x86_64.rpm
+#### rpm
+
+RPM : redhat package manager 패키지 관리 도구    
+
+```
+RPM 패키지 파일 형식 : 
+	httpd-2.4.6-40.el7.centos.x86_64.rpm
 	httpd - 2.4.6 - 40.el7.centos . x86_64 . rpm
 	패키지이름-버전정보-릴리즈정보.아키텍처정보.파일확장자
+	openssh-7.4p1-21.el7.x86_64
+```
 
-openssh-7.4p1-21.el7.x86_64
+*종속성(의존성) : 어떤 패키지를 사용하기 위해 특정 패키지나 라이브러리 파일이 필요함 (사진 설치)    
 
-*종속성(의존성) : 어떤 패키지를 사용하기 위해 특정 패키지나 라이브러리 파일이 필요함 (사진 설치)
-
-패키지 확인 #rpm -q [query-option] [query-argument]
+패키지 확인 
+```
+#rpm -q [query-option] [query-argument]
 -q with	-a all
 		-f 파일이나 디렉토리
 		-c 설정파일
@@ -402,120 +403,139 @@ openssh-7.4p1-21.el7.x86_64
 #rpm -qs crond
 #rpm -qi atd
 #rpm -qR sshd
+```
 
+**yum**  
+- Yellowdog Updater Modified
+- RPM 기반의 패키지의 설치, 제거 그리고 업데이트를 관리하는 도구
+- Repository레포지토리(저장소)에 패키지를 저장하고 관리하기 때문에 업데이트를 쉽게 함
+	- Repository : 패키지들을 저장해놓은 하나의 서버
+	- /etc/yum.repos.d/*.repo
+		```
+		 ex) /etc/yum.repos.d/test.repo
+			[repoID]
+			name=
+			mirrorlist= 또는 baseurl=http://
+			gpgcheck=1
+			gpgkey=file:///etc/pki/rpm-gpg/keyfilename
 
-yum
-Yellowdog Updater Modified
-RPM 기반의 패키지의 설치, 제거 그리고 업데이트를 관리하는 도구
-Repository레포지토리(저장소)에 패키지를 저장하고 관리하기 때문에 업데이트를 쉽게 함
-Repository : 패키지들을 저장해놓은 하나의 서버
- /etc/yum.repos.d/*.repo
- ex) /etc/yum.repos.d/test.repo
-	[repoID]
-	name=
-	mirrorlist= 또는 baseurl=http://
-	gpgcheck=1
-	gpgkey=file:///etc/pki/rpm-gpg/keyfilename
+		#yum repolist  (활성화되어있는 저장소만 확인)
+		#yum repolist  all
+		```
+패키지 정보 확인 
+- #yum info httpd  
+- 상세 정보(패키지 이름, 버전, 릴리즈버전, 아키텍처, 파일 크기, 설치 유무)
+- 특정 파일과 관련된 패키지 확인 #yum provides /etc/ssh/sshd_config
 
-#yum repolist  (활성화되어있는 저장소만 확인)
-#yum repolist  all
-
-패키지 정보 확인 #yum info httpd  
-   상세 정보(패키지 이름, 버전, 릴리즈버전, 아키텍처, 파일 크기, 설치 유무)
-특정 파일과 관련된 패키지 확인 #yum provides /etc/ssh/sshd_config
 패키지와 관련된 키워드 검색 
-  #yum search apache   이름과 summary만 매치하는 패키지를 출력
-  #yum search all apache    이름,summary, description에서 키워드와 매치하는 패키지 검색
-repository 패키지 목록 확인 #yum list
-	subargument : 	all 모든 패키지 목록 확인
-			available 현 repository에서 설치가능한 패키지 목록
-			extras 설치 가능한 설정 파일이 없는 패키지 확인
-			installed 설치된 패키지
-			obsoletes 설치된 패키지 중 repository에서 폐기된 패키지
-			recent 최근에 repository에 최근 추가된 패키지
-			updates 현 repository에서 업데이트가 가능한 패키지
-패키지 설치 #yum install -y 패키지명
-	-y : 설치과정중에 발새하는 대화형 질문에 모두 yes로 답하라.
-	-d : 설치하지 않고 다운로드만
+- #yum search apache   이름과 summary만 매치하는 패키지를 출력
+- #yum search all apache    이름,summary, description에서 키워드와 매치하는 패키지 검색
 
- 그외 시스템 내에 다운로드되어있는 rpm 패키지 설치도 가능
- URL 주소를 통한 yum 설치도 가능
+repository 패키지 목록 확인 
+- #yum list
+	- subargument : 	all 모든 패키지 목록 확인
+		- available 현 repository에서 설치가능한 패키지 목록
+		- extras 설치 가능한 설정 파일이 없는 패키지 확인
+		- installed 설치된 패키지
+		- obsoletes 설치된 패키지 중 repository에서 폐기된 패키지
+		- recent 최근에 repository에 최근 추가된 패키지
+		- updates 현 repository에서 업데이트가 가능한 패키지
 
-패키지 업데이트 #yum update -y 패키지명
-  하나의 소프트웨어 패키지에 대해서 다수의 버전을 설치할 수 없음.
-  이전버전의 패키는 삭제되고 최신버전의 패키지가 설치됨.
-  update 시 특정 패키지를 지정하지 않으면 설치된 모든 패키지와 yum repository에 저장된 모든 패키지 버전을 비교하여 업데이트 진행함.
- #yum install httpd
+패키지 설치 
+- #yum install -y 패키지명
+	- -y : 설치과정중에 발새하는 대화형 질문에 모두 yes처리
+	- -d : 설치하지 않고 다운로드만
+- 그외 시스템 내에 다운로드되어있는 rpm 패키지 설치도 가능
+- URL 주소를 통한 yum 설치도 가능
 
-커널을 업데이트 할 때에는 업데이트 진행 중 오류가 난다면 부팅이 안됨.
-이전 버전의 커널을 삭제하지 않고 그대로 보존함. boot loader에 커널 목록이 추가됨.
+패키지 업데이트 
+- #yum update -y 패키지명
+	- 하나의 소프트웨어 패키지에 대해서 다수의 버전을 설치할 수 없음.
+	- 이전버전의 패키는 삭제되고 최신버전의 패키지가 설치됨.
+	- update 시 특정 패키지를 지정하지 않으면 설치된 모든 패키지와 yum repository에 저장된 모든 패키지 버전을 비교하여 업데이트 진행함.
+	- #yum install httpd
 
-패키지 제거 #yum remove httpd
+커널을 업데이트 할 때에는 업데이트 진행 중 오류가 난다면 부팅이 안됨.    
+이전 버전의 커널을 삭제하지 않고 그대로 보존함. boot loader에 커널 목록이 추가됨.    
 
+패키지 제거 
+- #yum remove httpd
+
+```
 그룹 패키지 #yum groups [sub] [패키지명]
 	sub : 	info	패키지 그룹 정보 확인
 		install	패키지 그룹 설치
 		list	패키지 그룹 목록 확인 (이름만 확인)
 		remove	패키지 그룹 제거
  #yum groups info 'Basic Web Server'
+```
 
 패키지 설치 기록(history)
- yum으로 패키지 설치, 업데이트, 제거 등 로그파일에 기록됨. 
-/var/log/yum.log  : 순자적 기록 , 패키지 그룹에 해당하는 모든 패키지 기록 됨.
-#yum history   : 명령어 단위로 출력됨.
-
+- yum으로 패키지 설치, 업데이트, 제거 등 로그파일에 기록됨. 
+	- /var/log/yum.log  : 순자적 기록 , 패키지 그룹에 해당하는 모든 패키지 기록 됨.
+	- #yum history   : 명령어 단위로 출력됨.
+```
 #yum history list
 #yum history list 6
 	yum 명령어 확인 가능
 #yum history info 6	
 패키지명이나 함께 설치된 패키지도 확인 가능
+```
 
-
-패키지를 yum으로 패키지를 설치하다가 network 오류등으로 설치 중단이 되었을 때, 기존 설치하던 자료는 삭제를 하고 다시 설치할 때에는
-	# yum clean all  (버퍼에 있는 정보 삭제
+패키지를 yum으로 패키지를 설치하다가 network 오류등으로 설치 중단이 되었을 때, 기존 설치하던 자료는 삭제를 하고 다시 설치할 때에는     
+	# yum clean all  (버퍼에 있는 정보 삭제)
 
 
 ### Network Manager
 
 네트워크 정보 확인
+```
 ifconfig
 ip addr
 ping [option] destination
 traceroute [option] destination
 tracepath [option] destination
 route -n 
-
+```
+```
 *인터페이스 이름 : 장치유형  + 어댑터 유형 + 번호
  en(ethernet이더넷), w (wlan무선랜)
  o (on-broad) , s (hot-plug-slot) , p (PCI위치), b(BCMA Bus core) , ccw (CCCW bus group)
 
 $ls /etc/sysconfig/network-scripts/
+```
 
-레거시 legacy 네트워크 구성 (파일 수정)
-레거시 사용하는 경우, NetworkManager를 중지/비활성화/mask  (stop,disable,mask)
-$ systemctl stop NetworkManager
-$ ls -l /etc/sysconfig/network-scripts/ifcfg-*   파일 수정 > 네트워크 서비스 재시작
+레거시 legacy 네트워크 구성 (파일 수정)		 
 
+- 레거시 사용하는 경우, NetworkManager를 중지/비활성화/mask  (stop,disable,mask)
+	- $ systemctl stop NetworkManager
+	- $ ls -l /etc/sysconfig/network-scripts/ifcfg-*   파일 수정 > 네트워크 서비스 재시작
+
+```
 $ sudo vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
  속성	BOOTPROTO : 네트워크 관련 정보를 설정하기 위한 방식 , bootp, dhcp, none
 static 구성인 경우 (BOOTPROTO: none) 구성사항
+```
 
-네트워크관리자 NetworkManager
-nmcli : CLI 명령어
-nmtui : CLI환경에서 GUI처럼 키보드로 선택
-nm-connection-editor : GUI명령어
+네트워크관리자 NetworkManager    
+- nmcli : CLI 명령어
+- nmtui : CLI환경에서 GUI처럼 키보드로 선택
+- nm-connection-editor : GUI명령어
 
-패키지 설치 : # yum -y install NetworkManager
+패키지 설치 : 
+-  `yum -y install NetworkManager`
+- `systemctl status NetworkManger`   
 
-systemctl status NetworkManger
+/etc/sysconfig/network-scripts 디렉토리의 설정파일을 저장함. (ifcfg-인터페이스이름)         
 
-/etc/sysconfig/network-scripts 디렉토리의 설정파일을 저장함. (ifcfg-인터페이스이름)
-$ ls -l /etc/sysconfig/network-scripts/ifcfg-*
+`$ ls -l /etc/sysconfig/network-scripts/ifcfg-* `   
 
 nmcli명령어를 정리할것
 
 
-연결정보 추가 할 때 명령어 형식
+연결정보 추가 할 때 명령어 형식    
+
+```
 nmcli con add con-name "connection 이름" ifname 물리장치 type ethernet autoconnet yes => dhcp 설정
 
 nmcli con add con-name "connection 이름" ifname 물리 장치 type ethernet autoconnet yes ip4 "xxx.xxx.xxx.xxx/xx" gw4 "xxx.xxx.xxx.xxx" => 고정 아이피 설정
@@ -523,39 +543,39 @@ nmcli con add con-name "connection 이름" ifname 물리 장치 type ethernet au
 nmcli con reload
 
 nmcli con up "connection 이름" 
-
+```
 
 ### hostname
 
-IP주소 보다 쉽게 구분하기 위해 시스템 이름 지정  -DNS 서비스
-FQDN (Full Qualified Domain Name) 정규화된 도메인 이름 
-( 호스트네임+도메인네임)
+- IP주소를 보다 쉽게 구분하기 위해 시스템 이름 지정 > DNS 서비스
+- FQDN (Full Qualified Domain Name): 정규화된 도메인 이름 (호스트네임+도메인네임)
 
 호스트이름 분류
-static :  사용자가 지정한 정적인 호스트이름  , /etc/hostname에 저장
-transient : 커널이 유지 관리하는 동적 호스트 이름 (static 보다 우선순위가 낮음)
-pretty : 자유형식의 UTF8로 인코딩된 호스트이름, 길이와 문자 제한이 없으며, 특수문자 표현이 가능함.
+- static :  사용자가 지정한 정적인 호스트이름  , /etc/hostname에 저장
+- transient : 커널이 유지 관리하는 동적 호스트 이름 (static 보다 우선순위가 낮음)
+- pretty : 자유형식의 UTF8로 인코딩된 호스트이름, 길이와 문자 제한이 없으며, 특수문자 표현이 가능함.
 
-
+```
 hostnamectl
 hostnamectl set-hostname "encore's linux"
 hostnamectl status 
-
+```
 
 ### 방화벽
 
 방화벽 : 내부를 외부로부터 보호하기위해서 사용
- hardwre/software 가능.
- 내부가 외부로 가는 트래픽은 기본적으로 허용.
- 외부가 내부로 들오는 트래픽은 기본적으로 거부.
-서버가 서비스를 하기위해서는 반드시 해당 서비스의 포트를 허용해주는 정책이 추가되어야함.
+- hardwre/software 가능.
+- 내부가 외부로 가는 트래픽은 기본적으로 허용.
+- 외부가 내부로 들오는 트래픽은 기본적으로 거부.
+- 서버가 서비스를 하기위해서는 반드시 해당 서비스의 포트를 허용해주는 정책이 추가되어야함.
 
- 리눅스 방화벽은 커널의 netfilter 모듈에 의해서 패킷이 걸러짐
- 예전버전에는  iptables로 방화벽 설정
-centos 7는 systemd의 firewall-cmd (GUI:firewall-config)로 방화벽 설정.
+- 리눅스 방화벽은 커널의 netfilter 모듈에 의해서 패킷이 걸러짐
+- 예전버전에는  iptables로 방화벽 설정
+- centos 7는 systemd의 firewall-cmd (GUI:firewall-config)로 방화벽 설정.
 
 firewall-cmd 명령어 정리
 
+```
 firewall-cmd
 
 --state                                   : firewalld 실행 상태 확인
@@ -575,3 +595,4 @@ firewall-cmd
  + --permanent                            : 해당 옵션을 사용하지 않으면 현재 설정이 변경되며 영구설정은 지정이 안됨.
 --reload                                  : 런타임 구성 삭제, 영구 구성 적용
 --runtime-to-permanent                    : 실행중 설정을 영구 설정으로 변경
+```
