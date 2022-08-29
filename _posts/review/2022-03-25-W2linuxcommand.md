@@ -3,7 +3,6 @@ title:  'W2 리눅스 커맨드'
 categories: 'review'
 ---
 
-
 # 리눅스 기초
 
 ## 1. 리눅스 기본 환경
@@ -11,61 +10,37 @@ categories: 'review'
 ### 1) 컴퓨터의 주요 구성 요소
 
 - HW
-  
   - CPU
-  
   - Memory
-  
   - Disk
-  
   - NIC(Network Interface Card)
-  
   - GPU
-  
   - ...
-  
   - **IO(Input/Output): 입출력 장치**
-    
     - Input: 키보드
-    
     - Output: 모니터
 
-- SW
-  
+- SW  
   - Kernel
-  
   - **Shell**(CLI)
-    
     - sh
-    
     - **bash**
-    
     - zsh
-  
-  - ~~X window(GUI)~~
 
 ### 2) CLI
 
 - 명령: command
-
 - 옵션: option
-  
   - -o
-  
   - --option
-
 - 인자: argument
-  
   ```
   command -option argument
   ```
   
   - 명령
-  
   - 명령 옵션
-  
   - 명령 인자
-  
   - 명령 옵션 인자
   
   ```
@@ -85,20 +60,14 @@ man -s <section> <command>
 ```
 
 - space: 다음 페이지
-
 - b: 이전 페이지
-
 - enter: 다음 줄
-
 - q: 종료
-
 - /검색어
-  
   - n: 내림
-  
   - N: 올림
 
-https://en.wikipedia.org/wiki/Man_page
+https://en.wikipedia.org/wiki/Man_page 참고해서 볼것
 
 ## 2. 디렉토리 및 파일 보기
 
@@ -127,17 +96,13 @@ ls
 - `-F`
   
   - `/`: 디렉토리
-  
   - `*`: 실행 파일
-  
   - `@`: 심볼릭 링크/소프트 링크
-  
   - 없는: 텍스트 파일
 
 - `-a`
   
   - .
-  
   - ..
 
 - `-l`
@@ -149,25 +114,17 @@ drwxr-xr-x. 2 playdata playdata 6 Feb 14 15:00 Desktop
 - d: 파일의 형식
   
   - `d`: 디렉토리
-  
   - `l`: 심볼릭 링크
-  
   - `b`: 블록 장치
-  
   - `c`: 캐릭터 장치(원시(raw) 장치)
-  
   - `p`: 파이프(Pipe)
-  
   - `s`: 소켓 파일
-  
   - `-`: 텍스트 파일 / 실행 파일
 
 - `rwxr-xr-x`: 퍼미션, 권한
   
   - `rwx`: 소유자 권한
-  
   - `r-x`: 소유 그룹 권한
-  
   - `r-x`: 기타 사용자 권한
 
 - `.`: Access Control List(ACL): 추가 퍼미션, 권한
@@ -209,8 +166,10 @@ file <파일명>
 #### (5) 절대 경로 vs 상대 경로
 
 - 절대 경로: PATH(경로) 표현 /(루트) 표현 방법
+  - /home/playdata/pathtest/testfile
 
 - 상대 경로: 현재 작업 디렉토리로 부터 표현 방법
+  - ./pathtest/testfile
 
 ### 2) 파일(텍스트 파일)
 
@@ -223,9 +182,7 @@ cat, more, less, head, tail, wc
 - wc
   
   - 라인 수
-  
   - 워드 수
-  
   - 문자 수
 
 ## 3. 디렉토리 및 파일 내용 변경
@@ -245,7 +202,6 @@ cp [option] source(s) target
 | 디렉토리   | 디렉토리   |
 
 - `-i`: 덮어쓸것인지 확인
-
 - `-r`: 디렉토리 복사
 
 ### 2) 이동
@@ -266,11 +222,11 @@ source와  target의 경로가 같으면 이름 변경
 touch <filename>
 ```
 
-빈 파일
+빈 파일 생성
 
 이미 파일이 있다면 mtime을 현재 시각으로 변경
 
-> atime, ctime, mtime
+-> atime, ctime, mtime
 
 #### (2) 디렉토리
 
@@ -406,17 +362,11 @@ find <PATH> <OPTION> <ARGUMENT>
 - 파일 형식
   
   - `d`: 디렉토리
-  
   - `l`: 심볼릭 링크
-  
   - `b`: 블록 장치
-  
   - `c`: 캐릭터 장치(원시(raw) 장치)
-  
   - `p`: 파이프(Pipe)
-  
   - `s`: 소켓 파일
-  
   - `f`: 텍스트 파일 / 실행 파일
 
 ## 5. 텍스트 편집기
@@ -435,20 +385,14 @@ rwx r-x r-x
 ```
 
 - 123: Owner(소유자)
-
 - 456: Owner Group(소유 그룹)
-
 - 789: Others(기타 사용자)
-
 - r / -: Read / Deny: 4
-
 - w / -: Write / Deny: 2
-
 - x / - : Execute / Deny: 1
 
-사용자 생성 - 사용자 이름과 같은 그룹 생성 여기에 포함
-
-> `id`
+사용자 생성 - 사용자 이름과 같은 그룹 생성 여기에 포함    
+-> `id`
 
 파일
 
@@ -471,19 +415,12 @@ rwx r-x r-x
 - 실행?
 
 r: 4, w: 2, x: 1, -: 0
-
 **rwx: 7**
-
 **rw-: 6**
-
 **r-x: 5**
-
 **r--: 4**
-
 -wx: 3
-
 -w-: 2
-
 --x: 1
 
 **---: 0**
@@ -513,27 +450,20 @@ mode = who / operation / permission
 - who:
   
   - u: user/owner
-  
   - g: group/group owner
-  
   - o: others
-  
   - a: all(user+group+others)
 
 - operation
   
   - +: 추가
-  
   - -: 제거
-  
   - =: 대치
 
 - permissions
   
   - r
-  
   - w
-  
   - x
 
 #### (2) 8진수(Octal) 모드
@@ -551,19 +481,16 @@ mode: 777, 765 ...
 - SetUID: setuid가 설정된 파일을 실행하는 모든 사용자는 이 파일의 소유자의 권한으로 실행된다.
   
   - u+xs
-  
   - 4000
 
 - SetGID: setgid가 설정된 파일을 실행하는 모든 사용자는 이 파일의 소유 그룹의 권한으로 실행된다.
   
   - g+xs
-  
   - 2000
 
 - Sticky Bit
   
   - o+xt
-  
   - 1000
 
 Permission: How to use?
@@ -575,15 +502,12 @@ Subject --> Object
 System Access Control
 
 - DAC(Discretionary Access Control): 임의적 접근제어
-
 - MAC(Mandatory Access Control): 강제적 접근제어
-
 - Non-DAC -> RBAC(Role Based Access Control): 역할 기반의 접근 제어
 
 ## 7. 사용자 및 그룹
 
 사용자: id, 계정(account), 로그인 사용자
-
 그룹: 사용자 모아놓은 객체
 
 ### 1) 사용자 전환
@@ -612,11 +536,8 @@ sudo -i -u <account>
 ```
 
 - `%wheel`: wheel 그룹에 속한 사용자
-
 - `ALL`: 모든 시스템에서
-
 - `(ALL)`: 모든 사용자로
-
 - `ALL`: 모든 명령어를
 
 ### 2) 사용자 관리
@@ -640,17 +561,11 @@ root:x:0:0:root:/root:/bin/bash
 ```
 
 - root: 사용자 명
-
 - x: 패스워드 -> placeholder
-
 - 0: UserID(UID)
-
 - 0: GroupID(GID) - 주 그룹 GID
-
 - root: GECOS(General Electronics Comments) - 설명(실제 사용자 이름)
-
 - /root: 홈디렉토리
-
 - /bin/bash: 로그인 쉘
 
 /etc/shadow
@@ -664,25 +579,18 @@ root:X:Y:0:99999:7:A:B:C
 - X: 암호화된 패스워드
   
   - `$N`: 해쉬 알고리즘
-  
-  - `$salt`: 솔트 값
-  
-  - `$XXX`: 암호화된 패스워드
+    - `$salt`: 솔트 값
+    - `$XXX`: 암호화된 패스워드
     
     > !!: Lock
     > 
     > *: Disable
 
 - Y: 패스워드를 마지막으로 변경한 시각
-
 - 0: 패스워드 최소 사용 기간
-
 - 99999: 패스워드 최대 사용 기간
-
 - A: 패스워드 변경 경고 기간
-
 - B: 비활성화/유예기간 시간
-
 - C: 만료일
 
 ```
@@ -693,9 +601,8 @@ passwd <account>
 
 groupadd, groupmod, groupdel
 
-주(Primary) 그룹: 사용자는 반드시 하나의 주 그룹에만...
-
-보조(Secondary) 그룹:  사용자는 선택적으로 여러 보조 그룹에...
+주(Primary) 그룹: 사용자는 반드시 하나의 주 그룹에만 속함
+보조(Secondary) 그룹:  사용자는 선택적으로 여러 보조 그룹에 속할 수 있음 
 
 /etc/group
 
@@ -704,11 +611,8 @@ root:x:0:A
 ```
 
 - root: 그룹 명
-
 - x: 그룹 패스워드 -> place holder
-
 - 0: GroupID(GID)
-
 - A: 해당 그룹에 속한 사용자 목록(보조 그룹)
 
 ## 8. 쉘
@@ -854,9 +758,7 @@ env
 환경 변수 -> 환경 설정 파일
 
 - PATH: 명령을 찾을 경로
-
 - HISTSIZE: 히스토리 저장 개수
-
 - PS1: 프롬프트 모양
 
 > https://bashrcgenerator.com/
@@ -864,17 +766,13 @@ env
 1. 부팅
    
    - /etc/profile
-   
    - /etc/profile.d/*
-   
    - /etc/bashrc
 
 2. 로그인
    
    - ~/.profile
-   
    - ~/.bash_profile --> 로그인
-   
    - ~/.bashrc --> 터미널을 실행
 
 ```
@@ -899,17 +797,13 @@ lscpu
 ```
 
 - socket
-
 - core
-
 - thread
 
 ### 1) 프로세스
 
 - Program (Disk)
-
 - Process (Memory)
-
 - Thread (Instruction)
 
 
@@ -925,14 +819,12 @@ ps
 - Foreground
   
   - 터미널 대화식 명령 실행한 프로세스
-  
-  - 실행 --> 종료
+    - 실행 --> 종료
 
 - Background
   
   - 시스템 실행 비대화식 프로세스 -> 데몬(Daemon) -> 서비스(Service)
-  
-  - 계속적으로 실행되는
+    - 계속적으로 실행되는
 
 
 
