@@ -1,15 +1,12 @@
 
 # main links
 main:
-  - title: "Resume"
-    url: /resume/
-  - title: 'Bootcamp'
-    url: '/btcp/'
-  - title: 'Extras'
-    url: '/extra/'
   - title: 'Showcase'
     url: /showcase/
-
+  - title: "Resume"
+    url: /resume/
+  - title: 'Categories'
+    url: '/categories/'
 # docs:
 #   - title: 'Bootcamp'
 #     children:

@@ -1,5 +1,5 @@
 ---
-title:  'W2 리눅스 커맨드'
+title:  'W02 리눅스 커맨드'
 categories: 'review'
 ---
 

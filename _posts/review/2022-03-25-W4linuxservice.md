@@ -1,5 +1,5 @@
 ---
-title:  'W4 리눅스 서비스'
+title:  'W04 리눅스 서비스'
 categories: 'review'
 ---
 

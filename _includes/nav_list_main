@@ -36,6 +36,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "showcase" %}
+                        <li><a href="/categories/showcase" class="">Showcase ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         <span class="nav__sub-title">Extras</span>
             <ul>
                 {% for category in site.categories %}
@@ -46,8 +53,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "python" %}
-                        <li><a href="/categories/python" class="">Python ({{category[1].size}})</a></li>
+                    {% if category[0] == "opic" %}
+                        <li><a href="/categories/opic" class="">OPIC ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -98,14 +105,6 @@
                 {% for category in site.categories %}
                     {% if category[0] == "ncp" %}
                         <li><a href="/categories/ncp" class="">NCP ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        <span class="nav__sub-title">Showcase</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "showcase" %}
-                        <li><a href="categories/showcase" class="">Showcase ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
