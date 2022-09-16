@@ -60,6 +60,20 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "vm" %}
+                        <li><a href="/categories/vm" class="">VMWare ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "open" %}
+                        <li><a href="/categories/open" class="">Open stack ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "git" %}
                         <li><a href="/categories/git" class="">git ({{category[1].size}})</a></li>
                     {% endif %}
