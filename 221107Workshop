@@ -1,0 +1,202 @@
+원래 40~50명 규모로 진행하려고했음
+> 근데 341명 정도 등록해서 행사장옮기고 크게함
+
+---
+AWS Container service SOTU
+
+AMAZON ECS > powerful simplicity
+간단해서 많이사용
+
+AMAZON EKS > Open Flexibility
+쿠버선호이유와 비슷 + AWS의 가치 전달
+민첩+효율+유연(오픈소스적용)
+
+AWS Proton > 이게머임
+https://aws.amazon.com/ko/proton/
+셀프 서비스 인프라 템플릿과 프로비저닝 자동화를 통해 영향력을 확대하세요
+
+AWS 외부에서 k8s 클러스터 실행
+EKS Distro > EKS 버전, 패치 및 보안 조정 제공 
+EKS Anywhere > EKS Distro용 관리도구 세트, 클러스터 생성 및 수명 주기 제공
+             > 온프렘에서 k8s 클러 구성 및 가동을 위한 소프트웨어 패키지
+             
+--
+EKS Security AuthN & AuthZ
+
+IRSA? > IAM role for Service Account
+
+k8s 위협 모델
+
+공급망 위협 / 외부자 위협 / 내부자 위협
+
+1. 
+2. Server-side request forgery  SSRF
+
+IAM Principal - AWS 계정에 정의된 요청 주체
+User - 실사용자 기준 통제 
+Grp - 여러 유저를 묶어서 권한을 한꺼번에 통제 용도
+Role - 자동화된 프로세스에서 임시권한부여등 > 흠
+
+접근제어 policy를 통해 인가됨
+
+IAM 요청의 성공 조건
+> 보안 주체의 서명값(인증) + 정책에 허가된 권한(인가)
+
+k8s
+
+authentication
+authorization
+admission control
+
+k8s user
+
+- user
+    - 사용자를 위한 것
+    - 실제 사용자가 쿠버클러 접근시 사용
+- service account
+    - 파드를 위한 것
+    - default service account가 정의되어있으나, 수동ㅇ으로 생성가능
+    - 파드에 바인딩되어 동작
+
+k8s authentication
+client certifi. bearker token. aythenticating proxy 
+
+단sms SA Token, Webhook Token, OIDC 
+웹훅토큰을 위해 IAM 지원
+
+k8s authorization
+API server 에서 Api request 담당
+주로 RBAC
+
+k8s RBAC 요소
+entity: 그룹, 사용자, 또는 SA
+resource: 엔티티가 특정 작업을 사용해 액세스하려는 파드, 서비스 또는 시크릿
+롤: 엔티티가 다양한 리소스에 대해 수행할 수 있는 작업에 대한 규칙 정의하는데 사용
+롤바인딩: 엔티티에 롤연결, 허용하는 룰들을 정의하고 특정 리소스벼롤 명시
+ns: k8s 리소스에 대한 논리적 그룹 영역 제공
+네임스페이스는 보안경계를 만든데 사용되며 개체 이름에 대한 고유범위제공
+
+k8s RBAC 기본
+클러스터 롤 - 네임스페이스단위로 한정된 롤
+
+cluster scoped <> namespaced
+k api-resourece --?
+k api-resources --namespaced=true
+
+k8s 인증에 대한 자원만 가지고있으며 인가를 위한 별도의 구성요소는 갖고있지않음
+
+IAM Authentication
+
+kubectl 명령어를 실행하면
+AWS-IAM-Authenticator client가 사전서명된 url을 통해 토큰 발급
+생성된 토큰은 iam authenticator 서버로 들어가고, AWS STS를 통해 유효한 토큰인지 검증
+성공된다면 컨피그맵에 구성된 aws-auth를 통해 1:1 매핑이 되고
+웹훅토큰이 이럴때 사용이됨
+
+유효하게 허가된 토큰은 약 15분정도 유효하며, 허가된 권한을 사용 가능
+
+aws auth configmap을 통해 엔티티 매핑
+kind 컨피그맵에 유저 등록
+kind 롤에 role 등록
+kind rolebinding을 통해 user & role 매핑
+
+k8s 인증 - irsa
+
+irsa가 없다면, 파드가 작동시 해당 워커노드의 권한을 통해 다른 aws 리소스에 접근을 하게됨
+irsa를 사용한다면, k8s 환경에다가 파드에 iam Role을 구현?적용할수있다
+
+1. 클러스터에대한 oidc identity생성
+
+파드에 spec.serviceaccount에 해당 sa를 명시함. > 이게 irsa 사용하는거
+
+irsa를 하면 뭐가좋아져?
+없다면, 노드의 모든 파드에 같은 권한(=워커노드만큼)
+있다면, 개별 파드에 대해 권한부여및 관리 가능 (특정파드는 s3만, 특정파드는 ddb만)
+
+보안 권장사항
+EKS aws-auth configmap 관리 모범사례
+- 다른걸 떠나서, eks 클러스터 생성할때는 eks에 대한 전용 IAM Role로 생성하기를 권장 (그 롤에 모든게 부여되기때문에)
+
+---
+EKS Workshop - Deployment
+
+helm 기본 stable 레포에있던 많은 패키지들은 다 아티팩트허브로 이사갔음
+
+bitnami LAMP STACK 배포할때 유용한 레포지토리
+Wordpress 등 배포한다면 사용할만함
+
+---
+EKS Networks 
+
+EKS endpoint public
+고객 vpc의 워커노드가 vpc외부로 나와서 igw를 통해 컨트롤 vpc로 접근
+
+pub-private 
+워커노드 내부의 eks owned ENI를 통해서 컨트롤과 연결
++ 여전히 퍼블릭으로도 접근은 가능
+
+private 
+외부 트래픽은 연결이되지않음. 내부 ENI 통해서연결. 연결을 위해서는 배스천등을 달아야함
++ alb나 s3등을 구성하려면 vpc endpoint등을 사용해야함
+
+네트워크
+- 도커 네트워크로부터 시작
+- 브릿지
+- 호스트
+- 컨테이너 간 통신
+    - 
+- 파드간 통신
+    - 
+
+overlay vxlan pip etc
+외부나가려면 패킷에 인캡슐레이션을하기때문에 오버헤드 발생은 불가피. 이에대한 고려필요
+
+vpc cni 네트워킹
+노드에 primary/secondary ip가 부여됨
+일반 vpc 네트워킹을 사용하다보니 오버레이x 오버헤드 좀 덜함
+
+alb 인그레스를 사용하려면 그룹네임을 생성해야 인그레스만들때마다 alb가 생성되는걸 막을 수 있음
+
+파드별 보안그룹 지정이 안되서 불편해요!
+security group for pod 기능 추가
+trunk eni > pod 별 eni 지정가능. 
+
+netpol
+vpc cni에는 netpol기능 없음
+calico등에서만 가능 
+파드와 파드간의 통신을 제어하기 위해서 사용됨
+
+sg for pod > pod와 기타 aws 리소스와의 격리를 위해
+netpol > 파드간 트래픽 격리를 위해 
+
+
+---
+EKS highperformance cluster
+
+iptables 모드보다는 ipvs모드 사용시 네트워크에대한 오버헤드가 드라마틱하게 줄어든다
+
+네트워크시간이 증가한다 > cpu사용량이 늘어난다 > 클러스터 전체적인 부하가 증가한다
+
+메모리는 램 영역을 할당
+씨퓨는 쓰레드/프로세스를 붙잡고 수행떄까지 버침
+
+cpu부하도 줄이면서 네트워크시간도 줄이면서 이득인 튜닝이된다
+
+데몬셋들이 많으면 작은 인스턴스로 구성할경우 실질적으로 워크로드의 사용률 감소
+
+무조건 큰인스턴스가좋아?그건또 아니긴한데
+api콜적인 측면에서도 작은인스턴스 손해
+
+작은인스턴스 인스턴스 배포속도 빠름. 폭팔반경 감소
+큰인스턴스 > 큰 인스턴스 터지면 어떻게해? 파앙
+사실상 절반이상 사용은 못할것ㅎ켶 ㅠㅍ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+
+dns 튜닝
+점의 숫자 
+dns 쿼리시 클러내부에서 돌게만 설정되어있긴한
+그 점의숫자가 ndot. 기본값5
+
+n닷을 다하고 외부로 돌기때문에
+그렇지만 외부에있는 서비스를 많이활용한다면 앞에 external을 추가해서 처음부터 나가게하던가
+아니면 .의 숫자를 줄여서 빠르게 내부서칭을하고 나갈 수 있게할것
+
