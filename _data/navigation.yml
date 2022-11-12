@@ -3,8 +3,8 @@
 main:
   - title: 'Showcase'
     url: /showcase/
-  - title: "Resume"
-    url: /resume/
+  # - title: "Resume"
+  #   url: /resume/
   - title: 'Categories'
     url: '/categories/'
 # docs:
